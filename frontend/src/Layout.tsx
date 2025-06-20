@@ -128,14 +128,7 @@ const Layout = () => {
             </li>
           )}
 
-          {role === 'ADMIN' && (
-            <li className="nav-item">
-              <Link className="nav-link collapsed" to="/admin">
-                <i className="bi bi-shield-lock"></i>
-                <span>Admin Panel</span>
-              </Link>
-            </li>
-          )}
+
         </ul>
       </aside>
 
