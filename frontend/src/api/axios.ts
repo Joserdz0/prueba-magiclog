@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  //baseURL: 'https://prueba-magiclog.onrender.com',
-    baseURL: 'http://localhost:3000/',
+  baseURL: 'https://prueba-magiclog.onrender.com',
+  //baseURL: 'http://localhost:3000/',
 
 });
 
