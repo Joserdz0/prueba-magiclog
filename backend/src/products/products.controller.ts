@@ -4,6 +4,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { RolesGuard } from '../common/guards/roles.guard';
+import { ForbiddenException } from '@nestjs/common';
 
 @Controller('products')
 export class ProductsController {
@@ -40,5 +41,16 @@ export class ProductsController {
   async getAll(@Request() req, @Query('sellerId') sellerId?: string) {
     const filter = sellerId ? { sellerId: Number(sellerId) } : {};
     return this.productsService.findAll(filter);
+  }
+
+    @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('ADMIN')
+  @Get('admin/by-email')
+  async getProductsByEmail(
+    @Query('email') email: string,
+    @Query() filters: any
+  ) {
+    if (!email) throw new ForbiddenException('Falta el email del vendedor');
+    return this.productsService.searchBySellerEmail(email, filters);
   }
 }

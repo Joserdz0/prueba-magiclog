@@ -59,4 +59,40 @@ export class ProductsService {
     });
   }
 
+  async searchBySellerEmail(email: string, filters: {
+  name?: string;
+  sku?: string;
+  minPrice?: string;
+  maxPrice?: string;
+}) {
+  const seller = await this.prisma.users.findUnique({
+    where: { email },
+  });
+
+  if (!seller) {
+    throw new ForbiddenException('Vendedor no encontrado');
+  }
+
+  return this.prisma.products.findMany({
+    where: {
+      seller_id: seller.id,
+      ...(filters.name && {
+        name: { contains: filters.name.toLowerCase() },
+      }),
+      ...(filters.sku && {
+        sku: { contains: filters.sku.toLowerCase() },
+      }),
+      ...(filters.minPrice || filters.maxPrice
+        ? {
+            price: {
+              gte: filters.minPrice ? parseFloat(filters.minPrice) : undefined,
+              lte: filters.maxPrice ? parseFloat(filters.maxPrice) : undefined,
+            },
+          }
+        : {}),
+    },
+  });
+}
+
+
 }

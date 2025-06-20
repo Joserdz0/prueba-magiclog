@@ -48,7 +48,7 @@ const Layout = () => {
       <header id="header" className="header fixed-top d-flex align-items-center">
         <div className="d-flex align-items-center justify-content-between">
           <Link to="/" className="logo d-flex align-items-center">
-            <img src="./logo.png" alt="logo" />
+            <img src="./logo.png" alt="" />
             <span className="d-none d-lg-block">MagicLog</span>
           </Link>
           <i
@@ -104,7 +104,7 @@ const Layout = () => {
       <aside id="sidebar" className="sidebar">
         <ul className="sidebar-nav" id="sidebar-nav">
           <li className="nav-item">
-            <Link className="nav-link" to="/">
+            <Link className="nav-link collapsed" to="/">
               <i className="bi bi-grid"></i>
               <span>Dashboard</span>
             </Link>
@@ -127,8 +127,22 @@ const Layout = () => {
               </Link>
             </li>
           )}
-
-
+          {(role === 'SELLER' || role === 'ADMIN') && (
+            <li className="nav-item">
+              <Link className="nav-link collapsed" to="/my-products">
+                <i className="bi bi-box-seam"></i>
+                <span>Mis productos</span>
+              </Link>
+            </li>
+          )}
+          {( role === 'ADMIN') && (
+            <li className="nav-item">
+              <Link className="nav-link collapsed" to="/SellerProductsPage">
+                <i className="bi bi-box-seam"></i>
+                <span>Productos por E-mail</span>
+              </Link>
+            </li>
+          )}
         </ul>
       </aside>
 
