@@ -30,6 +30,9 @@ const Dashboard: React.FC = () => {
 
   const [quantities, setQuantities] = useState<Record<number, number>>({});
 
+ 
+
+useEffect(() => {
   const fetchProducts = async () => {
     try {
       const res = await axios.get('/products/search', { params: filters });
@@ -39,9 +42,8 @@ const Dashboard: React.FC = () => {
     }
   };
 
-useEffect(() => {
   fetchProducts();
-}, [fetchProducts]);
+}, [filters]);
 
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
